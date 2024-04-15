@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'package:uncanny_woods/configs/app_settings.dart';
+import 'package:uncanny_woods/pages/acess_page.dart';
+import 'package:uncanny_woods/repositories/user_repository.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MeuAplicativo());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppSetings()), 
+        ChangeNotifierProvider(create: (context) => UserRepository()),
+      ],
+      child: const MeuAplicativo(),
+    ),
+  );
 }
 
 class MeuAplicativo extends StatelessWidget {
@@ -16,7 +27,7 @@ class MeuAplicativo extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      home: const HomePage(),
+      home: const AcessPage(),
     );
   }
 }

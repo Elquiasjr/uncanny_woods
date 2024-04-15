@@ -1,22 +1,21 @@
-// ignore: unnecessary_import
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-// ignore: unnecessary_import
-import 'package:flutter/widgets.dart';
-import 'package:uncanny_woods/pages/inicio_page.dart';
-import 'package:uncanny_woods/pages/profiel_page.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:uncanny_woods/pages/backpack_page.dart';
+import 'package:uncanny_woods/pages/user_info_page.dart';
+import 'package:uncanny_woods/pages/walk_florest.dart';
 import 'selecion_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
   
+  
   @override
   Widget build(BuildContext context) => Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(
-          'assets/Menu1.png'
-        ),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/Menu1.png'),
+         
           fit: BoxFit.cover,
       ),
     ),
@@ -25,31 +24,41 @@ class HomePage extends StatelessWidget {
       body: SizedBox(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
+          child:
+           Center(
+            child:
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
 
                   GestureDetector(
-                    onTap: () {
+                    onTap: () =>
                       Navigator.push(
-                        context, MaterialPageRoute(
-                        builder: (context) => const InicioPage(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white24,
+                        context,
+                         PageTransition(
+                          child:  const WalkPage(),
+                          type: PageTransitionType.fade,
+                          ),
                       ),
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 24
-                        ), 
-                        child: Text(
-                          'Adentrar FLoresta'
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white24,
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 24
+                          ), 
+                          child: Text(
+                            '* Adentrar Floresta *',
+                            style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Silkscreen',
+                                  color: Color.fromARGB(255, 219, 178, 27),
+                                ),
+                          ),
                         ),
                       ),
                     ),
@@ -61,14 +70,13 @@ class HomePage extends StatelessWidget {
                   
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
 
                       GestureDetector(
                         onTap: ()  {
                           Navigator.push(
                             context, MaterialPageRoute(
-                              builder: (context) => const SelectPage(),
+                              builder: (context) =>const SelectPage(),
                             ),
                           );
                         },
@@ -78,30 +86,34 @@ class HomePage extends StatelessWidget {
                           child: Image.asset('assets/mascaras_icone.png'),
                         ),
                       ),
-                      
-
-                       Container(width: 47,),
-
 
 
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context, MaterialPageRoute(
-                              builder: (context) => const ProfilePage(),
+                              builder: (context) => const UserInfoPage(),
                             ),
                           );
                         },
-                        child: SizedBox(
-                          width: 75,
-                          height: 75,
-                          child: Image.asset('assets/perfil_icone.png'),),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
+                          child: SizedBox(
+                            width: 75,
+                            height: 75,
+                            child: Image.asset('assets/perfil_icone.png'),),
+                        ),
                       ),
-
-                        Container(width: 47,),
 
 
                       GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context, MaterialPageRoute(
+                              builder: (context) =>  BackpackPage(),
+                            ),
+                          );
+                        },
                         child: SizedBox(
                           width: 100,
                           height: 100,
@@ -112,12 +124,9 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
           ),
         ),
-      ),
-    ),
-  ); 
-    
-  
+      )
+    )
+  );
 }
