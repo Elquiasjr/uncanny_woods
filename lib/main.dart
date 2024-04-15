@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:uncanny_woods/configs/app_settings.dart';
 import 'pages/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MeuAplicativo());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppSetings()), 
+      ],
+      child: const MeuAplicativo(),
+    ),
+  );
 }
 
 class MeuAplicativo extends StatelessWidget {
