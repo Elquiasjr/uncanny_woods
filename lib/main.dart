@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:uncanny_woods/configs/app_settings.dart';
 import 'package:uncanny_woods/pages/acess_page.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';
-
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserRepository(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppSetings()), 
+        ChangeNotifierProvider(create: (context) => UserRepository()),
+      ],
       child: const MeuAplicativo(),
     ),
   );
