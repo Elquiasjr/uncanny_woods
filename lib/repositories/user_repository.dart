@@ -47,6 +47,7 @@ class UserRepository extends ChangeNotifier {
         senha: user.senha,
       ),
     ]);
+    loggedUser = _users[userIndex];
     notifyListeners();
   }
 }
