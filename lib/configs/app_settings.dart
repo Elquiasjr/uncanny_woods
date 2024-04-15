@@ -6,7 +6,7 @@ class AppSetings extends ChangeNotifier{
   Map<String, int> locale = {
     'Mask': 1,
     'Score': 1,
-    'Deep': 1
+    'Deep':1,
   };
 
   AppSetings(){
@@ -29,7 +29,7 @@ class AppSetings extends ChangeNotifier{
     locale = {
       'Mask': mask,
       'Score': score,
-      'Deep': deep,
+      'Deep': deep
     };
     notifyListeners();
   }

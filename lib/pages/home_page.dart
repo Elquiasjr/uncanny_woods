@@ -4,14 +4,34 @@ import 'package:page_transition/page_transition.dart';
 import 'package:uncanny_woods/pages/backpack_page.dart';
 import 'package:uncanny_woods/pages/profiel_page.dart';
 import 'package:uncanny_woods/pages/walk_florest.dart';
+import 'package:provider/provider.dart';
+import 'package:uncanny_woods/configs/app_settings.dart';
 import 'selecion_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
-  
+
   
   @override
-  Widget build(BuildContext context) => Container(
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  
+  readNumberFormat(){
+    sec = context.watch<AppSetings>().locale;
+  }
+
+  aprofundar(){
+    context.read<AppSetings>().setDeep(0);
+  }
+  
+  late Map<String,int> sec;
+
+  @override
+  Widget build(BuildContext context) {
+    readNumberFormat();
+    return Container(
     decoration: const BoxDecoration(
       image: DecorationImage(
         image: AssetImage(
@@ -33,14 +53,16 @@ class HomePage extends StatelessWidget {
                 children: [
 
                   GestureDetector(
-                    onTap: () =>
+                    onTap: () {
+                    aprofundar();
                       Navigator.push(
                         context,
                          PageTransition(
                           child:  const WalkPage(),
                           type: PageTransitionType.fade,
                           ),
-                      ),
+                      );
+                    },
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       child: Container(
@@ -130,6 +152,5 @@ class HomePage extends StatelessWidget {
       ),
     ),
   ); 
-    
-  
+  }
 }
