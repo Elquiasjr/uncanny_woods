@@ -25,8 +25,6 @@ class _SelectPage extends State<SelectPage> {
   }
 
   selectMask(){
-    real = sec['Mask'];
-
     return GestureDetector(
       onTap: (){
         context.read<AppSetings>().setMask(selected);
@@ -200,7 +198,7 @@ class _SelectPage extends State<SelectPage> {
                          )
                       ],
                     ),
-                    Padding(
+                      Padding(
                       padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                       child: ClipRRect(
                          borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -221,7 +219,7 @@ class _SelectPage extends State<SelectPage> {
                            ),
                          ),
                        ),
-                     ),
+                      ),
                    selectMask()
                  ],
                ),

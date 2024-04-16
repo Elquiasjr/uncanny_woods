@@ -54,104 +54,176 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         ),
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: const Text('Register'),
+            title: const Text(
+              'Register',
+              style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 20.0,
+                  fontFamily: 'silkscreen'),
+            ),
+            backgroundColor: Colors.black54,
+            iconTheme: const IconThemeData(
+              color: Color.fromARGB(255, 219, 178, 27),
+            ),
             elevation: 0,
           ),
-          body: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: _usernameController,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Username',
-                      fillColor: Colors.indigo),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your username';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Email',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _dateController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Date of Birth',
-                  ),
-                  onTap: () async {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime(2015),
-                      firstDate: DateTime(1900),
-                      lastDate: DateTime(2015),
-                    );
-                    if (picked != null) {
-                      _dateController.text =
-                          "${picked.toLocal()}".split(' ')[0];
-                    }
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your date of birth';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                  ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
-                Container(
-                  alignment: Alignment.bottomCenter,
-                  margin: const EdgeInsets.only(top: 24),
-                  child: ElevatedButton(
-                    onPressed: register,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.save),
-                        Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text(
-                              'Save',
-                              style: TextStyle(fontSize: 20),
-                            )),
-                      ],
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                reverse: true,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: TextFormField(
+                        controller: _usernameController,
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.white70),
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Username',
+                            labelStyle: TextStyle(color: Colors.white70),
+                            fillColor: Colors.indigo),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your username';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: TextFormField(
+                        controller: _emailController,
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.white70),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Email',
+                          labelStyle: TextStyle(color: Colors.white70),
+                          fillColor: Colors.indigo,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: TextFormField(
+                        controller: _dateController,
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.white70),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Date of Birth',
+                          labelStyle: TextStyle(color: Colors.white70),
+                          fillColor: Colors.indigo,
+                        ),
+                        onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          final DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime(2015),
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2015),
+                          );
+                          if (picked != null) {
+                            _dateController.text =
+                                "${picked.toLocal()}".split(' ')[0];
+                          }
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your date of birth';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: TextFormField(
+                        controller: _passwordController,
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.white70),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Colors.white70),
+                          fillColor: Colors.indigo,
+                        ),
+                        obscureText: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your password';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: 300,
+                      child: ElevatedButton(
+                        onPressed: register,
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black54),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          overlayColor:
+                              MaterialStateProperty.all<Color>(Colors.grey),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.save),
+                            Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Silkscreen',
+                                    color: Colors.white70,
+                                  ),
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

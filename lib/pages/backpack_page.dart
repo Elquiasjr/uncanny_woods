@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:uncanny_woods/pages/item_page.dart';
-//import 'package:flutter/widgets.dart';
 import 'package:uncanny_woods/repository/item_repository.dart';
 import 'package:uncanny_woods/models/item.dart';
+import 'package:provider/provider.dart';
+import 'package:uncanny_woods/configs/app_settings.dart';
 
-// ignore: must_be_immutable, use_key_in_widget_constructors
+// ignore: use_key_in_widget_constructors
 class BackpackPage extends StatefulWidget {
   @override
   State<BackpackPage> createState() => _BackpackPageState();
 }
 
 class _BackpackPageState extends State<BackpackPage> {
+  late Map<String,int> sec;
   var controller = ItemRepository();
   final int _highScore = 5;
 
-  get highScore => _highScore;
-  set highScore(dynamic a) => _highScore;
+
+  readNumberFormat(){
+    sec = context.watch<AppSetings>().locale;
+  }
 
   mostrarDetalhes(Item item){
     Navigator.push(
@@ -27,6 +31,7 @@ class _BackpackPageState extends State<BackpackPage> {
 
   @override
   Widget build(BuildContext context) {
+    readNumberFormat();
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(

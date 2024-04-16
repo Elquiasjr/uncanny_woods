@@ -75,12 +75,13 @@ class AcessPageState extends State<AcessPage> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 100,
           title: const Center(
             child: Text(
-              'Login Page',
+              'Uncanny Woods',
               style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 20.0,
+                  color: Color.fromARGB(255, 219, 178, 27),
+                  fontSize: 30.0,
                   fontFamily: 'silkscreen'),
             ),
           ),
@@ -94,26 +95,78 @@ class AcessPageState extends State<AcessPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return buildDialog(context);
-                        },
-                      );
-                    },
-                    child: const Text('Login'),
+                  Container(
+                    width: 300,
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(10.0), // Add this
+                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.only(bottom: 20.0),
+                    child: const Text(
+                      'Bem-vindo!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 20.0,
+                        fontFamily: 'silkscreen',
+                      ),
+                    ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegisterPage()),
-                      );
-                    },
-                    child: const Text('Register'),
+                  SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return buildDialog(context);
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black54),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        overlayColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 20.0,
+                            fontFamily: 'silkscreen'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black54),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        overlayColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
+                      ),
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 20.0,
+                            fontFamily: 'silkscreen'),
+                      ),
+                    ),
                   ),
                 ],
               ),
