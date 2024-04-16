@@ -1,27 +1,33 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:uncanny_woods/models/player.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:uncanny_woods/pages/inicio_page.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/configs/app_settings.dart';
+import 'package:uncanny_woods/pages/home_page.dart';
 
-class WalkPage extends StatefulWidget {
-  const WalkPage({super.key});
+
+class OverPage extends StatefulWidget {
+  const OverPage({super.key});
+
 
   @override
-  State<WalkPage> createState() => _WalkPageState();
+  State<OverPage> createState() => _OverPageState();
 }
 
-class _WalkPageState extends State<WalkPage> {
-  
+class _OverPageState extends State<OverPage> {
+
   late Map<String,int> sec;
   late int deepnes = sec['Deep'] ?? 0;
-  late Jogador jogador;
+  late int bestScore = sec['Score'] ?? 0;
 
-  readNumberFormat(){
+
+  setNewHighScore(){
+    context.read<AppSetings>().setScore(deepnes);
+  }
+   readNumberFormat(){
     sec = context.watch<AppSetings>().locale;
   }
+
   
   @override
   Widget build(BuildContext context) {
@@ -34,17 +40,20 @@ class _WalkPageState extends State<WalkPage> {
           child: AnimatedTextKit(
             isRepeatingAnimation: false,
             onFinished: () {
+              if(bestScore < deepnes){
+                setNewHighScore();
+              }
               Navigator.push(
                 context,
                 PageTransition(
                   duration: const Duration(milliseconds: 500),
-                  child:  const InicioPage(),
+                  child:  const HomePage(),
                   type: PageTransitionType.fade,
                 ),
               );
             },
             animatedTexts: [ 
-              TypewriterAnimatedText('Você adentra mais profundamente na floresta...',
+              TypewriterAnimatedText('Sua máscara foi quebrada e a imensidão da floresta te inunda ...',
               speed: const Duration(milliseconds: 100),
               textAlign: TextAlign.center,
               textStyle: const TextStyle(
@@ -52,7 +61,7 @@ class _WalkPageState extends State<WalkPage> {
                 fontFamily: 'Silkscreen',
                 color: Color.fromARGB(255, 219, 178, 27)),
               ),
-              TypewriterAnimatedText("Profundidade atual : $deepnes",
+              TypewriterAnimatedText("Profundidade alcançada : $deepnes",
               speed: const Duration(milliseconds: 100),
               textAlign: TextAlign.center,
               textStyle: const TextStyle(
@@ -60,7 +69,7 @@ class _WalkPageState extends State<WalkPage> {
                 fontFamily: 'Silkscreen',
                 color: Color.fromARGB(255, 219, 178, 27)),
               ),
-              TypewriterAnimatedText('Uma figura estranha se aproxima pela escuridão',
+              TypewriterAnimatedText('profundidade máxima já alcançada : $bestScore',
               speed: const Duration(milliseconds: 100),
               textAlign: TextAlign.center,
               textStyle: const TextStyle(
