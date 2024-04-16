@@ -2,7 +2,7 @@
 
 ![](/assets/Menu1.png)
 
-**Uncanny Woods** te convida a uma jornada arrepiante por uma floresta envolta em segredos obscuros e criaturas sinistras. Enfrente seus inimgios com a devida estratégia e adaptabilidade para superá-los e se aprofundar cada vez mais. Avance pela floresta e desbloqueie itens que contame a sua história.
+**Uncanny Woods** te convida a uma jornada arrepiante por uma floresta envolta em segredos obscuros e criaturas sinistras. Enfrente seus inimgios com a devida estratégia e adaptabilidade para superá-los e se aprofundar cada vez mais buscando entender os mistérios que essa, aparente viva, floresta escondem de você. Avance pela floresta e desbloqueie itens que contam a sua história.
 
 
 Esse projeto está sendo desenvolvido por Arthur Andrielli e Elquias Monteiro.
