@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/models/user.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';
+import 'package:uncanny_woods/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,27 +24,53 @@ class _RegisterPageState extends State<RegisterPage> {
 
   late UserRepository instance;
 
-  void register() {
-    instance = Provider.of<UserRepository>(context, listen: false);
-    if (_formKey.currentState!.validate()) {
+  void register() async {
+    instance = context.read<UserRepository>();
+    try {
+      await context
+          .read<AuthService>()
+          .register(_emailController.text, _passwordController.text);
       User newUser = User(
         username: _usernameController.text,
         email: _emailController.text,
         dateOfBirth: DateTime.parse(_dateController.text),
         senha: _passwordController.text,
       );
-
-      instance.saveUser(newUser);
-
-      Navigator.pop(context);
-
+      setState(
+        () {
+          instance.saveData(newUser);
+        },
+      );
+    } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('User registered successfully!'),
+        SnackBar(
+          content: Text(e.message),
         ),
       );
     }
   }
+
+  // void register() {
+  //   instance = Provider.of<UserRepository>(context, listen: false);
+  //   if (_formKey.currentState!.validate()) {
+  //     User newUser = User(
+  //       username: _usernameController.text,
+  //       email: _emailController.text,
+  //       dateOfBirth: DateTime.parse(_dateController.text),
+  //       senha: _passwordController.text,
+  //     );
+
+  //     instance.saveUser(newUser);
+
+  //     Navigator.pop(context);
+
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('User registered successfully!'),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) => Container(

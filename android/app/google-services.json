@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "315946024042",
+    "project_id": "uncanny-woods",
+    "storage_bucket": "uncanny-woods.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315946024042:android:9ff0c3c247323e251b5e13",
+        "android_client_info": {
+          "package_name": "com.example.uncanny_woods"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1ebjLn6pqNh-VAOI-1lGNH_E48pgS9J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

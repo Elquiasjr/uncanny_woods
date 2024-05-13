@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/models/user.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';
+import 'package:uncanny_woods/services/auth_service.dart';
 
 class UserInfoPage extends StatefulWidget {
   const UserInfoPage({super.key});
@@ -18,19 +19,22 @@ class UserInfoPageState extends State<UserInfoPage> {
 
   late UserRepository instance;
   late User loggedUser;
+  late AuthService auth;
 
   @override
   void initState() {
     super.initState();
-    instance = Provider.of<UserRepository>(context, listen: false);
-    loggedUser = instance.getLoggedUser();
-    _nameController.text = loggedUser.username;
-    _emailController.text = loggedUser.email;
-    _dateController.text = loggedUser.dateOfBirth.toString();
   }
 
   @override
   Widget build(BuildContext context) {
+    instance = context.watch<UserRepository>();
+    auth = context.watch<AuthService>();
+    loggedUser = instance.userData!;
+
+    _nameController.text = loggedUser.username;
+    _emailController.text = loggedUser.email;
+
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -136,15 +140,20 @@ class UserInfoPageState extends State<UserInfoPage> {
                       ),
                       onTap: () async {
                         FocusScope.of(context).requestFocus(FocusNode());
+                        DateTime initialDate = loggedUser.dateOfBirth.toLocal();
                         final DateTime? picked = await showDatePicker(
                           context: context,
-                          initialDate: loggedUser.dateOfBirth.toLocal(),
+                          initialDate: initialDate,
                           firstDate: DateTime(1900),
                           lastDate: DateTime(2015),
                         );
                         if (picked != null) {
-                          _dateController.text =
+                          String formattedDate =
                               "${picked.toLocal()}".split(' ')[0];
+                          setState(() {
+                            initialDate = picked;
+                            _dateController.text = formattedDate;
+                          });
                         }
                       },
                       validator: (value) {
@@ -167,8 +176,7 @@ class UserInfoPageState extends State<UserInfoPage> {
                             dateOfBirth: DateTime.parse(_dateController.text),
                             senha: loggedUser.senha,
                           );
-                          instance.updateUser(updateUser, loggedUser.username,
-                              loggedUser.email);
+                          instance.updateUserData(updateUser, loggedUser.email);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('User info updated')),
                           );
@@ -189,6 +197,34 @@ class UserInfoPageState extends State<UserInfoPage> {
                           fontSize: 20,
                           fontFamily: 'Silkscreen',
                           color: Color.fromARGB(255, 219, 178, 27),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            auth.logout();
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black54),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        overlayColor:
+                            MaterialStateProperty.all<Color>(Colors.grey),
+                      ),
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Silkscreen',
+                          color: Color.fromARGB(255, 219, 27, 27),
                         ),
                       ),
                     ),
