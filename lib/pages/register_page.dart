@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/models/user.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';
+import 'package:uncanny_woods/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,23 +24,29 @@ class _RegisterPageState extends State<RegisterPage> {
 
   late UserRepository instance;
 
-  void register() {
-    instance = Provider.of<UserRepository>(context, listen: false);
-    if (_formKey.currentState!.validate()) {
+  void register() async {
+    instance = context.read<UserRepository>();
+    try {
+      await context
+          .read<AuthService>()
+          .register(_emailController.text, _passwordController.text);
       User newUser = User(
         username: _usernameController.text,
         email: _emailController.text,
         dateOfBirth: DateTime.parse(_dateController.text),
         senha: _passwordController.text,
       );
-
-      instance.saveUser(newUser);
-
-      Navigator.pop(context);
-
+      setState(
+        () {
+          instance.saveData(newUser);
+          Navigator.pop(context);
+        },
+      );
+    } on AuthException catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('User registered successfully!'),
+        SnackBar(
+          content: Text(e.message),
         ),
       );
     }
@@ -159,6 +166,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             initialDate: DateTime(2015),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2015),
+                            builder: (BuildContext context, Widget? child) {
+                            return Theme(
+                              data: ThemeData.light().copyWith(
+                                colorScheme: const ColorScheme.dark(
+                                  primary: Colors.white, //Color for the header
+                                  onPrimary:
+                                      Colors.black, //Color for the header text
+                                  surface: Color.fromARGB(255, 32, 32, 32), //Background color
+                                  onSurface: Colors
+                                      .white, //Color for the text like 'CANCEL', 'OK'
+                                ),
+                                dialogBackgroundColor:
+                                    Colors.blue, //Background color
+                              ),
+                              child: child!,
+                            );
+                          },
                           );
                           if (picked != null) {
                             _dateController.text =

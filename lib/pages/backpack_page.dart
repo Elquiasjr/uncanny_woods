@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uncanny_woods/pages/item_page.dart';
-import 'package:uncanny_woods/repository/item_repository.dart';
+import 'package:uncanny_woods/repositories/item_repository.dart';
 import 'package:uncanny_woods/models/item.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/configs/app_settings.dart';

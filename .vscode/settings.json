@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/elquias/Documents/Setimo-Periodo/Dispositivos-Moveis/Projetos-Flutter/uncanny_woods/linux"
+    "cmake.sourceDirectory": "/home/elquias/Documents/Setimo-Periodo/Dispositivos-Moveis/Projetos-Flutter/uncanny_woods/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
