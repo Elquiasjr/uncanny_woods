@@ -39,9 +39,11 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(
         () {
           instance.saveData(newUser);
+          Navigator.pop(context);
         },
       );
     } on AuthException catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
@@ -49,28 +51,6 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     }
   }
-
-  // void register() {
-  //   instance = Provider.of<UserRepository>(context, listen: false);
-  //   if (_formKey.currentState!.validate()) {
-  //     User newUser = User(
-  //       username: _usernameController.text,
-  //       email: _emailController.text,
-  //       dateOfBirth: DateTime.parse(_dateController.text),
-  //       senha: _passwordController.text,
-  //     );
-
-  //     instance.saveUser(newUser);
-
-  //     Navigator.pop(context);
-
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('User registered successfully!'),
-  //       ),
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) => Container(
@@ -186,6 +166,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             initialDate: DateTime(2015),
                             firstDate: DateTime(1900),
                             lastDate: DateTime(2015),
+                            builder: (BuildContext context, Widget? child) {
+                            return Theme(
+                              data: ThemeData.light().copyWith(
+                                colorScheme: const ColorScheme.dark(
+                                  primary: Colors.white, //Color for the header
+                                  onPrimary:
+                                      Colors.black, //Color for the header text
+                                  surface: Color.fromARGB(255, 32, 32, 32), //Background color
+                                  onSurface: Colors
+                                      .white, //Color for the text like 'CANCEL', 'OK'
+                                ),
+                                dialogBackgroundColor:
+                                    Colors.blue, //Background color
+                              ),
+                              child: child!,
+                            );
+                          },
                           );
                           if (picked != null) {
                             _dateController.text =

@@ -24,6 +24,7 @@ class AcessPageState extends State<AcessPage> {
           .read<AuthService>()
           .login(_emailController.text, _passwordController.text);
     } on AuthException catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
@@ -62,29 +63,29 @@ class AcessPageState extends State<AcessPage> {
         body: Stack(
           children: <Widget>[
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10.0), // Add this
-                    ),
-                    padding: const EdgeInsets.all(8.0),
-                    margin: const EdgeInsets.only(bottom: 20.0),
-                    child: const Text(
-                      'Bem-vindo!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 20.0,
-                        fontFamily: 'silkscreen',
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.black54,
+                        borderRadius: BorderRadius.circular(10.0), // Add this
+                      ),
+                      padding: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.only(bottom: 20.0),
+                      child: const Text(
+                        'Bem-vindo!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 20.0,
+                          fontFamily: 'silkscreen',
+                        ),
                       ),
                     ),
-                  ),
-                  SingleChildScrollView(
-                    child: Padding(
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Form(
                         key: _formKey,
@@ -206,8 +207,8 @@ class AcessPageState extends State<AcessPage> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

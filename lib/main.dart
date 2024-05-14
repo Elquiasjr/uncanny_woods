@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uncanny_woods/configs/app_settings.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';

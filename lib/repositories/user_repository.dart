@@ -52,14 +52,23 @@ class UserRepository extends ChangeNotifier {
   }
 
   saveData(User user) async {
-    await db.collection('users/${auth.usuario!.uid}/data').doc(user.email).set({
-      'username': user.username,
-      'email': user.email,
-      'dateOfBirth': user.dateOfBirth,
-      'senha': user.senha,
-    });
-    _userData = user;
-    notifyListeners();
+    try {
+      await db
+          .collection('users/${auth.usuario!.uid}/data')
+          .doc(user.email)
+          .set({
+        'username': user.username,
+        'email': user.email,
+        'dateOfBirth': user.dateOfBirth,
+        'senha': user.senha,
+      });
+      _userData = user;
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 
   updateUserData(User user, String email) {

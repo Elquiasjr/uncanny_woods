@@ -16,6 +16,7 @@ class UserInfoPageState extends State<UserInfoPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _dateController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   late UserRepository instance;
   late User loggedUser;
@@ -34,6 +35,7 @@ class UserInfoPageState extends State<UserInfoPage> {
 
     _nameController.text = loggedUser.username;
     _emailController.text = loggedUser.email;
+    _passwordController.text = loggedUser.senha;
 
     return Container(
       decoration: const BoxDecoration(
@@ -96,6 +98,7 @@ class UserInfoPageState extends State<UserInfoPage> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: TextFormField(
+                      enabled: false,
                       controller: _emailController,
                       style:
                           const TextStyle(fontSize: 20, color: Colors.white70),
@@ -105,21 +108,6 @@ class UserInfoPageState extends State<UserInfoPage> {
                         labelStyle: TextStyle(color: Colors.white70),
                       ),
                       keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        const pattern =
-                            r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
-                            r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
-                            r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
-                            r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
-                            r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
-                            r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-                            r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])';
-                        final regex = RegExp(pattern);
-
-                        return value!.isEmpty || !regex.hasMatch(value)
-                            ? 'Enter a valid email address'
-                            : null;
-                      },
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -159,6 +147,34 @@ class UserInfoPageState extends State<UserInfoPage> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter your date of birth';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      style:
+                          const TextStyle(fontSize: 20, color: Colors.white70),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.white70),
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must have at least 6 characters';
                         }
                         return null;
                       },
@@ -208,6 +224,7 @@ class UserInfoPageState extends State<UserInfoPage> {
                         setState(
                           () {
                             auth.logout();
+                            Navigator.pop(context);
                           },
                         );
                       },
