@@ -16,6 +16,7 @@ class UserRepository extends ChangeNotifier {
       email: '',
       dateOfBirth: DateTime.now(),
       senha: '',
+      profilePicture: '',
     );
   }
 
@@ -40,6 +41,7 @@ class UserRepository extends ChangeNotifier {
           email: doc.get('email'),
           dateOfBirth: doc.get('dateOfBirth').toDate(),
           senha: doc.get('senha'),
+          profilePicture: doc.get('profilePicture'),
         );
         _userData = user;
         notifyListeners();
@@ -61,6 +63,7 @@ class UserRepository extends ChangeNotifier {
         'email': user.email,
         'dateOfBirth': user.dateOfBirth,
         'senha': user.senha,
+        'profilePicture': user.profilePicture ?? '',
       });
       _userData = user;
       notifyListeners();
@@ -69,6 +72,23 @@ class UserRepository extends ChangeNotifier {
         print(e);
       }
     }
+  }
+
+  saveProfilePicture(String profilePicture) {
+    db
+        .collection('users/${auth.usuario!.uid}/data')
+        .doc(auth.usuario!.email)
+        .update({
+      'profilePicture': profilePicture,
+    });
+    _userData = User(
+      username: _userData!.username,
+      email: _userData!.email,
+      dateOfBirth: _userData!.dateOfBirth,
+      senha: _userData!.senha,
+      profilePicture: profilePicture,
+    );
+    notifyListeners();
   }
 
   updateUserData(User user, String email) {
@@ -80,6 +100,7 @@ class UserRepository extends ChangeNotifier {
       'email': user.email,
       'dateOfBirth': user.dateOfBirth,
       'senha': user.senha,
+      'profilePicture': user.profilePicture ?? '',
     });
     _userData = user;
     notifyListeners();

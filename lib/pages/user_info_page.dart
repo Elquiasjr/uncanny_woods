@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uncanny_woods/models/user.dart';
+import 'package:uncanny_woods/pages/profile_picture_page.dart';
 import 'package:uncanny_woods/repositories/user_repository.dart';
 import 'package:uncanny_woods/services/auth_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserInfoPage extends StatefulWidget {
   const UserInfoPage({super.key});
@@ -21,10 +25,54 @@ class UserInfoPageState extends State<UserInfoPage> {
   late UserRepository instance;
   late User loggedUser;
   late AuthService auth;
+  XFile? image;
+  String? path;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  _selectImage() async {
+    final ImagePicker picker = ImagePicker();
+
+    try {
+      XFile? tryImage = await picker.pickImage(source: ImageSource.gallery);
+      if (tryImage != null) {
+        setState(() {
+          image = tryImage;
+          path = image!.path;
+          instance.saveProfilePicture(path!);
+        });
+      }
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  imageSelector() {
+    if (path == null) {
+      return Image.asset(
+        'assets/blank_pfp.jpg',
+        width: 100,
+        height: 100,
+      );
+    } else {
+      try {
+        return Image.file(
+          File(path!),
+          width: 100,
+          height: 100,
+        );
+      } catch (e) {
+        instance.saveProfilePicture('');
+        return Image.asset(
+          'assets/blank_pfp.jpg',
+          width: 100,
+          height: 100,
+        );
+      }
+    }
   }
 
   @override
@@ -32,6 +80,7 @@ class UserInfoPageState extends State<UserInfoPage> {
     instance = context.watch<UserRepository>();
     auth = context.watch<AuthService>();
     loggedUser = instance.userData!;
+    path = loggedUser.profilePicture == '' ? null : loggedUser.profilePicture;
 
     _nameController.text = loggedUser.username;
     _emailController.text = loggedUser.email;
@@ -66,6 +115,46 @@ class UserInfoPageState extends State<UserInfoPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      imageSelector(),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          var result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const ProfilePicturePage(),
+                                  fullscreenDialog: true));
+                          result != null
+                              ? setState(() {
+                                  path = result as String;
+                                })
+                              : null;
+                        },
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.white70,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      InkWell(
+                        onTap: () {
+                          _selectImage();
+                        },
+                        child: const Icon(
+                          Icons.photo_library,
+                          color: Colors.white70,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 15),
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(

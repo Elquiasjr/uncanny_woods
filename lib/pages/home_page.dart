@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:uncanny_woods/pages/backpack_page.dart';
@@ -11,56 +10,49 @@ import 'selecion_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  
-  readNumberFormat(){
+  readNumberFormat() {
     sec = context.watch<AppSetings>().locale;
   }
 
-  aprofundar(){
+  aprofundar() {
     context.read<AppSetings>().setDeep(0);
   }
-  
-  late Map<String,int> sec;
+
+  late Map<String, int> sec;
 
   @override
   Widget build(BuildContext context) {
     readNumberFormat();
     return Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage(
-          'assets/Menu1.png'
-        ),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/Menu1.png'),
           fit: BoxFit.cover,
+        ),
       ),
-    ),
-    child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child:
-           Center(
-            child:
-              Column(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SizedBox(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-
                   GestureDetector(
                     onTap: () {
-                    aprofundar();
+                      aprofundar();
                       Navigator.push(
                         context,
-                         PageTransition(
-                          child:  const WalkPage(),
+                        PageTransition(
+                          child: const WalkPage(),
                           type: PageTransitionType.fade,
-                          ),
+                        ),
                       );
                     },
                     child: ClipRRect(
@@ -71,50 +63,45 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 24
-                          ), 
+                              vertical: 12, horizontal: 24),
                           child: Text(
                             '* Adentrar Floresta *',
                             style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Silkscreen',
-                                  color: Color.fromARGB(255, 219, 178, 27),
-                                ),
+                              fontSize: 20,
+                              fontFamily: 'Silkscreen',
+                              color: Color.fromARGB(255, 219, 178, 27),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-
                   const SizedBox(
-                    height:40,
+                    height: 40,
                   ),
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       GestureDetector(
-                        onTap: ()  {
+                        onTap: () {
                           Navigator.push(
-                            context, MaterialPageRoute(
-                              builder: (context) =>const SelectPage(),
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SelectPage(),
                             ),
                           );
                         },
                         child: SizedBox(
-                          width: 100,
-                          height: 100,
+                          width: 90,
+                          height: 90,
                           child: Image.asset('assets/mascaras_icone.png'),
                         ),
                       ),
-
-
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                            context, MaterialPageRoute(
+                            context,
+                            MaterialPageRoute(
                               builder: (context) => const UserInfoPage(),
                             ),
                           );
@@ -124,22 +111,22 @@ class _HomePageState extends State<HomePage> {
                           child: SizedBox(
                             width: 75,
                             height: 75,
-                            child: Image.asset('assets/perfil_icone.png'),),
+                            child: Image.asset('assets/perfil_icone.png'),
+                          ),
                         ),
                       ),
-
-
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
-                            context, MaterialPageRoute(
-                              builder: (context) =>  BackpackPage(),
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BackpackPage(),
                             ),
                           );
                         },
                         child: SizedBox(
-                          width: 100,
-                          height: 100,
+                          width: 90,
+                          height: 90,
                           child: Image.asset('assets/bolsa_icone.png'),
                         ),
                       ),
@@ -147,10 +134,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+            ),
           ),
         ),
       ),
-    ),
-  ); 
+    );
   }
 }
