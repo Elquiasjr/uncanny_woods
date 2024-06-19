@@ -12,7 +12,6 @@ Esse projeto está sendo desenvolvido por Arthur Andrielli e Elquias Monteiro.
 * Privilégio das classes Raposa e Urso
 * Mecânica de desbloqueio de itens na backpack
 * Retorno gráfico das ações na tela de combate
-* Função de Logout
 
 ## Instalação
 
